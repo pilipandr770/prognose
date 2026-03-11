@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prognose · Личный кабинет</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body data-page="dashboard">
+  <div class="page-shell app-shell">
+    <aside class="sidebar">
+      <div>
+        <p class="eyebrow">Personal hub</p>
+        <h1>Prognose</h1>
+        <p class="sidebar-copy">Личный кабинет после входа: отсюда пользователь выбирает prediction room или portfolio room.</p>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/dashboard" class="is-active">Кабинет</a>
+        <a href="/events">Предсказания</a>
+        <a href="/portfolio">Портфель</a>
+        <a href="/leaderboards">Рейтинги</a>
+        <a href="/billing">Подписка</a>
+        <a href="/admin" class="requires-admin is-hidden">Админ</a>
+      </nav>
+      <div class="status-card">
+        <span class="status-dot"></span>
+        <div>
+          <strong>Dashboard</strong>
+          <p>Social layer открывается из рейтингов, а не как первичная точка входа.</p>
+        </div>
+      </div>
+    </aside>
+    <main class="content">
+      <section class="page-hero reveal">
+        <p class="eyebrow">After login</p>
+        <h2>Выбери игровой режим</h2>
+        <p class="hero-copy">Prediction room и portfolio room разделены, чтобы пользователь не терялся между разными сценариями. Отсюда начинается работа с продуктом после логина.</p>
+      </section>
+
+      <section class="panel reveal">
+        <div class="panel-head row-head">
+          <div>
+            <h3>Мой аккаунт</h3>
+            <p>Сводка по балансу, подписке и статусу аккаунта.</p>
+          </div>
+          <div class="inline-actions">
+            <button id="load-me" class="ghost-button">Обновить</button>
+            <button id="logout-button" class="ghost-button" type="button">Выйти</button>
+          </div>
+        </div>
+        <div class="metrics-grid" id="account-metrics"></div>
+        <pre id="account-json" class="code-box empty-state">Профиль еще не загружен.</pre>
+      </section>
+
+      <section class="choice-grid reveal">
+        <article class="choice-card prediction-card">
+          <p class="eyebrow">Prediction room</p>
+          <h3>События и прогнозы</h3>
+          <p>Предлагай события, проходи через moderation queue и открывай прогнозы на игровые евро только в одобренных рынках.</p>
+          <a class="hero-link primary-link" href="/events">Открыть prediction cabinet</a>
+        </article>
+        <article class="choice-card portfolio-card">
+          <p class="eyebrow">Portfolio room</p>
+          <h3>Виртуальный портфель</h3>
+          <p>Управляй игровыми сделками, смотри приватный состав позиций и соревнуйся в отдельном портфельном рейтинге.</p>
+          <a class="hero-link primary-link" href="/portfolio">Открыть portfolio cabinet</a>
+        </article>
+      </section>
+
+      <section class="grid two reveal">
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Отдельные рейтинги</h3>
+            <p>Prediction leaderboard и portfolio leaderboard живут отдельно.</p>
+          </div>
+          <div class="stack-copy">
+            <p>Сначала пользователь сравнивает себя с другими по результату.</p>
+            <p>Потом уже переходит в social layer для подписок и общения.</p>
+          </div>
+          <a class="hero-link secondary-link" href="/leaderboards">Открыть рейтинги</a>
+        </article>
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Подписка</h3>
+            <p>Тариф влияет на инструменты и социальные лимиты, но не на игровую честность.</p>
+          </div>
+          <div class="stack-copy">
+            <p>Free для входа в продукт.</p>
+            <p>Pro и Elite для расширенной аналитики и social features.</p>
+          </div>
+          <a class="hero-link secondary-link" href="/billing">Открыть подписку</a>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="/assets/app.js"></script>
+</body>
+</html>

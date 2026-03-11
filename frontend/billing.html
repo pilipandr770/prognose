@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prognose · Подписка</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body data-page="billing">
+  <div class="page-shell app-shell">
+    <aside class="sidebar">
+      <div>
+        <p class="eyebrow">Prediction game</p>
+        <h1>Prognose</h1>
+        <p class="sidebar-copy">Игровая платформа прогнозов, рейтингов и приватных портфелей без денежных ставок.</p>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/dashboard">Кабинет</a>
+        <a href="/events">Предсказания</a>
+        <a href="/portfolio">Портфель</a>
+        <a href="/leaderboards">Рейтинги</a>
+        <a href="/billing" class="is-active">Подписка</a>
+        <a href="/admin" class="requires-admin is-hidden">Админ</a>
+      </nav>
+      <div class="status-card">
+        <span class="status-dot"></span>
+        <div>
+          <strong>Billing</strong>
+          <p>Тарифы и текущая подписка пользователя.</p>
+        </div>
+      </div>
+    </aside>
+    <main class="content">
+      <section class="page-hero reveal">
+        <p class="eyebrow">User page</p>
+        <h2>Тарифы и подписка</h2>
+        <p class="hero-copy">Stripe webhook flow закончим после деплоя. Пока здесь пользователь видит тарифы и может тестировать mock checkout.</p>
+      </section>
+      <section class="grid two reveal">
+        <article class="panel">
+          <div class="panel-head row-head">
+            <div>
+              <h3>Моя подписка</h3>
+              <p>Текущий план и доступные entitlements.</p>
+            </div>
+            <button id="load-billing-me" class="ghost-button">Обновить</button>
+          </div>
+          <div class="metrics-grid" id="billing-metrics"></div>
+          <pre id="billing-json" class="code-box empty-state">Подписка еще не загружена.</pre>
+        </article>
+        <article class="panel">
+          <div class="panel-head row-head">
+            <div>
+              <h3>Тарифные планы</h3>
+              <p>Mock checkout остается доступным для ручного теста.</p>
+            </div>
+            <button id="load-plans" class="ghost-button">Обновить тарифы</button>
+          </div>
+          <div id="plans-grid" class="plans-grid empty-state">Тарифы еще не загружены.</div>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="/assets/app.js"></script>
+</body>
+</html>

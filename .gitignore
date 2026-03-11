@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.sqlite3
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.env
+backend/.env
+backend/instance/
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/

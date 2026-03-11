@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prognose · Рейтинги</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body data-page="leaderboards">
+  <div class="page-shell app-shell">
+    <aside class="sidebar">
+      <div>
+        <p class="eyebrow">Prediction game</p>
+        <h1>Prognose</h1>
+        <p class="sidebar-copy">Игровая платформа прогнозов, рейтингов и приватных портфелей без денежных ставок.</p>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/dashboard">Кабинет</a>
+        <a href="/events">Предсказания</a>
+        <a href="/portfolio">Портфель</a>
+        <a href="/leaderboards" class="is-active">Рейтинги</a>
+        <a href="/billing">Подписка</a>
+        <a href="/admin" class="requires-admin is-hidden">Админ</a>
+      </nav>
+      <div class="status-card">
+        <span class="status-dot"></span>
+        <div>
+          <strong>Leaderboards</strong>
+          <p>Два независимых рейтинга платформы.</p>
+        </div>
+      </div>
+    </aside>
+    <main class="content">
+      <section class="page-hero reveal">
+        <p class="eyebrow">User page</p>
+        <h2>Рейтинги прогнозов и портфелей</h2>
+        <p class="hero-copy">На этой странице только соревновательный слой. Переход в social layer и общение начинаются уже после просмотра рейтингов.</p>
+      </section>
+      <section class="grid two reveal">
+        <article class="panel">
+          <div class="panel-head row-head">
+            <div>
+              <h3>Prediction Leaderboard</h3>
+              <p>Accuracy, ROI и sample bonus.</p>
+            </div>
+            <button data-board="predictions" class="refresh-board ghost-button">Обновить</button>
+          </div>
+          <div id="prediction-board" class="table-list empty-state">Рейтинг еще не загружен.</div>
+        </article>
+        <article class="panel">
+          <div class="panel-head row-head">
+            <div>
+              <h3>Portfolio Leaderboard</h3>
+              <p>Return и diversification bonus.</p>
+            </div>
+            <button data-board="portfolios" class="refresh-board ghost-button">Обновить</button>
+          </div>
+          <div id="portfolio-board" class="table-list empty-state">Рейтинг еще не загружен.</div>
+        </article>
+      </section>
+      <section class="panel reveal">
+        <div class="panel-head row-head">
+          <div>
+            <h3>Дальше в сообщество</h3>
+            <p>После сравнения результатов можно добавить пользователей, открыть их профиль и перейти к общению.</p>
+          </div>
+          <a class="hero-link secondary-link" href="/social">Открыть social layer</a>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/assets/app.js"></script>
+</body>
+</html>

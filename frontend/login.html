@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prognose Login</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body class="auth-body">
+  <main class="auth-shell">
+    <section class="auth-brand-panel">
+      <p class="eyebrow">Prediction game</p>
+      <h1>Вход в Prognose</h1>
+      <p>Войди в аккаунт, чтобы управлять прогнозами, портфелем, подписками и своей позицией в рейтингах.</p>
+      <div class="auth-links">
+        <a class="hero-link secondary-link" href="/">На главную</a>
+        <a class="hero-link primary-link" href="/register">Создать аккаунт</a>
+      </div>
+    </section>
+
+    <section class="auth-form-panel">
+      <div class="panel-head">
+        <h2>Login</h2>
+        <p>Используй email и пароль. После успешного входа токены сохранятся локально в браузере.</p>
+      </div>
+
+      <form id="login-form" class="stack-form auth-form">
+        <input name="email" type="email" placeholder="Email" required>
+        <input name="password" type="password" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+      </form>
+
+      <div class="inline-actions auth-inline-actions">
+        <button id="refresh-access" class="ghost-button" type="button">Обновить access token</button>
+      </div>
+
+      <div class="auth-status" id="auth-status">Статус: ожидание входа.</div>
+      <div class="auth-hint is-hidden" id="auth-hint"></div>
+      <pre id="auth-result" class="code-box empty-state">Результат входа появится здесь.</pre>
+    </section>
+  </main>
+
+  <script src="/assets/auth.js"></script>
+</body>
+</html>
