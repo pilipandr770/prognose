@@ -6,7 +6,7 @@ from app.models.event import Event, EventOutcome
 from app.models.leaderboard import LeaderboardSnapshot
 from app.models.portfolio import PortfolioPosition, PortfolioTrade, PortfolioWatchlistItem
 from app.models.prediction import PredictionPosition
-from app.models.social import FollowRelation
+from app.models.social import FollowRelation, SocialNotification
 from app.models.user import User
 from app.models.wallet import Wallet, WalletEntry
 
@@ -24,6 +24,7 @@ __all__ = [
 	"Event",
 	"EventOutcome",
 	"FollowRelation",
+	"SocialNotification",
 	"LeaderboardSnapshot",
 	"PortfolioPosition",
 	"PortfolioTrade",

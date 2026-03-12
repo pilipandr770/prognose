@@ -5,6 +5,7 @@ from app.extensions import db
 from app.models.event import Event, EventOutcome
 from app.models.prediction import PredictionPosition
 from app.models.user import User
+from app.services.social_notification_service import notify_event_moderated, notify_event_published
 from app.services.wallet_service import create_wallet_entry
 
 
@@ -162,5 +163,8 @@ def moderate_event(*, event_id: int, admin_user_id: int, decision: str, notes: s
     event.status = "open" if normalized_decision == "approve" else "rejected"
     event.moderation_notes = notes.strip() if notes else None
     event.moderated_by_user_id = admin_user.id
+    notify_event_moderated(event=event, decision=normalized_decision)
+    if normalized_decision == "approve":
+        notify_event_published(event)
     db.session.commit()
     return event

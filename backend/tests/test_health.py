@@ -62,6 +62,7 @@ def test_register_login_and_fetch_profile(client):
     profile_payload = profile_response.get_json()
     assert profile_payload["handle"] == "forecastfox"
     assert profile_payload["wallet"]["current_balance"] == "10000.00"
+    assert profile_payload["social"]["unread_notifications_count"] == 0
 
 
 def test_create_event_and_place_prediction(client):
@@ -751,10 +752,168 @@ def test_follow_and_activity_feed_show_followed_predictions(client):
     feed_response = client.get("/api/social/feed", headers=alice_headers)
     assert feed_response.status_code == 200
     feed_payload = feed_response.get_json()
-    assert len(feed_payload["items"]) == 1
-    assert feed_payload["items"][0]["handle"] == "bob"
-    assert feed_payload["items"][0]["type"] == "prediction"
-    assert feed_payload["items"][0]["stake_amount"] == "150.00"
+    assert len(feed_payload["items"]) >= 2
+    assert {item["type"] for item in feed_payload["items"]} >= {"event", "prediction"}
+
+    prediction_item = next(item for item in feed_payload["items"] if item["type"] == "prediction")
+    assert prediction_item["handle"] == "bob"
+    assert prediction_item["stake_amount"] == "150.00"
+
+    event_item = next(item for item in feed_payload["items"] if item["type"] == "event")
+    assert event_item["handle"] == "bob"
+    assert event_item["event_title"] == "Will gold finish the month higher?"
+
+
+def test_social_discovery_returns_following_and_suggestions(client):
+    client.post(
+        "/api/auth/register",
+        json={"email": "viewer@example.com", "handle": "viewer", "password": "strong-pass-123"},
+    )
+    client.post(
+        "/api/auth/register",
+        json={"email": "maker@example.com", "handle": "maker", "password": "strong-pass-123"},
+    )
+    client.post(
+        "/api/auth/register",
+        json={"email": "creator@example.com", "handle": "creator", "password": "strong-pass-123"},
+    )
+
+    viewer_login = client.post("/api/auth/login", json={"email": "viewer@example.com", "password": "strong-pass-123"})
+    maker_login = client.post("/api/auth/login", json={"email": "maker@example.com", "password": "strong-pass-123"})
+    creator_login = client.post("/api/auth/login", json={"email": "creator@example.com", "password": "strong-pass-123"})
+    viewer_headers = {"Authorization": f"Bearer {viewer_login.get_json()['access_token']}"}
+    maker_headers = {"Authorization": f"Bearer {maker_login.get_json()['access_token']}"}
+    creator_headers = {"Authorization": f"Bearer {creator_login.get_json()['access_token']}"}
+
+    assert client.post("/api/users/maker/follow", headers=viewer_headers).status_code == 201
+
+    create_event_response = client.post(
+        "/api/events",
+        headers=creator_headers,
+        json={
+            "title": "Will EURUSD hold above 1.10?",
+            "description": "Discovery creator test",
+            "category": "forex",
+            "source_of_truth": "ECB",
+            "closes_at": "2026-10-01T00:00:00Z",
+            "resolves_at": "2026-10-02T00:00:00Z",
+            "outcomes": ["Yes", "No"],
+        },
+    )
+    event_payload = create_event_response.get_json()["event"]
+    assert create_event_response.status_code == 201
+
+    moderate_response = client.post(
+        f"/api/admin/events/{event_payload['id']}/moderate",
+        headers=viewer_headers,
+        json={"decision": "approve", "notes": "Discovery setup"},
+    )
+    assert moderate_response.status_code == 200
+
+    discovery_response = client.get("/api/social/discovery", headers=viewer_headers)
+    assert discovery_response.status_code == 200
+    payload = discovery_response.get_json()
+    assert any(item["handle"] == "maker" for item in payload["following"])
+    assert any(item["handle"] == "creator" for item in payload["recommended_users"])
+
+
+def test_follow_creates_social_inbox_notification_and_can_mark_read(client):
+    client.post(
+        "/api/auth/register",
+        json={"email": "reader@example.com", "handle": "reader", "password": "strong-pass-123"},
+    )
+    client.post(
+        "/api/auth/register",
+        json={"email": "author@example.com", "handle": "author", "password": "strong-pass-123"},
+    )
+
+    reader_login = client.post("/api/auth/login", json={"email": "reader@example.com", "password": "strong-pass-123"})
+    author_login = client.post("/api/auth/login", json={"email": "author@example.com", "password": "strong-pass-123"})
+    reader_headers = {"Authorization": f"Bearer {reader_login.get_json()['access_token']}"}
+    author_headers = {"Authorization": f"Bearer {author_login.get_json()['access_token']}"}
+
+    follow_response = client.post("/api/users/author/follow", headers=reader_headers)
+    assert follow_response.status_code == 201
+
+    inbox_response = client.get("/api/social/inbox", headers=author_headers)
+    assert inbox_response.status_code == 200
+    inbox_items = inbox_response.get_json()["items"]
+    assert len(inbox_items) == 1
+    assert inbox_items[0]["notification_type"] == "new_follower"
+    assert inbox_items[0]["actor_handle"] == "reader"
+    assert inbox_items[0]["is_read"] is False
+
+    read_response = client.post(f"/api/social/inbox/{inbox_items[0]['id']}/read", headers=author_headers)
+    assert read_response.status_code == 200
+    assert read_response.get_json()["notification"]["is_read"] is True
+
+    me_response = client.get("/api/me", headers=author_headers)
+    assert me_response.status_code == 200
+    assert me_response.get_json()["social"]["unread_notifications_count"] == 0
+
+
+def test_event_approval_populates_social_inbox_for_creator_and_followers(client):
+    client.post(
+        "/api/auth/register",
+        json={"email": "adminsocial@example.com", "handle": "adminsocial", "password": "strong-pass-123"},
+    )
+    client.post(
+        "/api/auth/register",
+        json={"email": "maker2@example.com", "handle": "maker2", "password": "strong-pass-123"},
+    )
+    client.post(
+        "/api/auth/register",
+        json={"email": "follower2@example.com", "handle": "follower2", "password": "strong-pass-123"},
+    )
+
+    admin_login = client.post("/api/auth/login", json={"email": "adminsocial@example.com", "password": "strong-pass-123"})
+    maker_login = client.post("/api/auth/login", json={"email": "maker2@example.com", "password": "strong-pass-123"})
+    follower_login = client.post("/api/auth/login", json={"email": "follower2@example.com", "password": "strong-pass-123"})
+    admin_headers = {"Authorization": f"Bearer {admin_login.get_json()['access_token']}"}
+    maker_headers = {"Authorization": f"Bearer {maker_login.get_json()['access_token']}"}
+    follower_headers = {"Authorization": f"Bearer {follower_login.get_json()['access_token']}"}
+
+    assert client.post("/api/users/maker2/follow", headers=follower_headers).status_code == 201
+
+    create_event_response = client.post(
+        "/api/events",
+        headers=maker_headers,
+        json={
+            "title": "Will Nvidia close the quarter green?",
+            "description": "Inbox moderation test",
+            "category": "stocks",
+            "source_of_truth": "Nasdaq close",
+            "closes_at": "2026-11-01T00:00:00Z",
+            "resolves_at": "2026-11-02T00:00:00Z",
+            "outcomes": ["Yes", "No"],
+        },
+    )
+    assert create_event_response.status_code == 201
+    event_payload = create_event_response.get_json()["event"]
+    assert event_payload["status"] == "pending_review"
+
+    moderate_response = client.post(
+        f"/api/admin/events/{event_payload['id']}/moderate",
+        headers=admin_headers,
+        json={"decision": "approve", "notes": "Looks good."},
+    )
+    assert moderate_response.status_code == 200
+
+    creator_inbox = client.get("/api/social/inbox", headers=maker_headers)
+    assert creator_inbox.status_code == 200
+    creator_items = creator_inbox.get_json()["items"]
+    assert any(item["notification_type"] == "event_moderated" for item in creator_items)
+
+    follower_inbox = client.get("/api/social/inbox", headers=follower_headers)
+    assert follower_inbox.status_code == 200
+    follower_items = follower_inbox.get_json()["items"]
+    published_item = next(item for item in follower_items if item["notification_type"] == "followed_user_event_published")
+    assert published_item["actor_handle"] == "maker2"
+    assert published_item["payload"]["event_title"] == "Will Nvidia close the quarter green?"
+
+    read_all_response = client.post("/api/social/inbox/read-all", headers=follower_headers)
+    assert read_all_response.status_code == 200
+    assert read_all_response.get_json()["updated"] >= 1
 
 
 def test_public_profile_shows_counts_and_hides_private_portfolio_data(client):
@@ -786,6 +945,8 @@ def test_public_profile_shows_counts_and_hides_private_portfolio_data(client):
     assert profile_payload["handle"] == "profileuser"
     assert profile_payload["followers_count"] == 0
     assert profile_payload["following_count"] == 0
+    assert profile_payload["approved_events_count"] == 0
+    assert profile_payload["resolved_events_count"] == 0
     assert "holdings" not in profile_payload["portfolio_summary"]
     assert "available_cash" not in profile_payload["portfolio_summary"]
 

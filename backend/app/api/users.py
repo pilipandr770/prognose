@@ -6,6 +6,7 @@ from app.models.prediction import PredictionPosition
 from app.models.user import User
 from app.services.billing_service import get_billing_summary
 from app.services.entitlement_service import get_user_entitlements
+from app.services.social_notification_service import get_unread_social_notifications_count
 
 
 users_bp = Blueprint("users", __name__)
@@ -42,6 +43,9 @@ def me():
             },
             "subscription": subscription,
             "entitlements": entitlements,
+            "social": {
+                "unread_notifications_count": get_unread_social_notifications_count(user.id),
+            },
             "account_flags": {
                 "failed_login_attempts": user.failed_login_attempts,
                 "suspicious_activity": user.suspicious_activity,
