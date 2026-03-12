@@ -1,72 +1,72 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prognose · Портфель</title>
+  <title>Prognose · Portfolio</title>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="portfolio">
   <div class="page-shell app-shell">
     <aside class="sidebar">
       <div>
-        <p class="eyebrow">Prediction game</p>
+        <p class="eyebrow">Prognose-Spiel</p>
         <h1>Prognose</h1>
-        <p class="sidebar-copy">Игровая платформа прогнозов, рейтингов и приватных портфелей без денежных ставок.</p>
+        <p class="sidebar-copy">Spielerische Plattform fuer Prognosen, Ranglisten und private Portfolios ohne Geldeinsaetze.</p>
       </div>
       <nav class="sidebar-nav">
-        <a href="/dashboard">Кабинет</a>
-        <a href="/events">Предсказания</a>
-        <a href="/portfolio" class="is-active">Портфель</a>
-        <a href="/leaderboards">Рейтинги</a>
-        <a href="/billing">Подписка</a>
-        <a href="/admin" class="requires-admin is-hidden">Админ</a>
+        <a href="/dashboard">Uebersicht</a>
+        <a href="/events">Prognosen</a>
+        <a href="/portfolio" class="is-active">Portfolio</a>
+        <a href="/leaderboards">Ranglisten</a>
+        <a href="/billing">Abo</a>
+        <a href="/admin" class="requires-admin is-hidden">Verwaltung</a>
       </nav>
       <div class="status-card">
         <span class="status-dot"></span>
         <div>
           <strong>Portfolio</strong>
-          <p>Только пользовательские сделки и обзор своего портфеля.</p>
+          <p>Nur eigene Trades und die persoenliche Portfolio-Uebersicht.</p>
         </div>
       </div>
     </aside>
     <main class="content">
       <section class="page-hero reveal">
-        <p class="eyebrow">Live market</p>
-        <h2>Собери игровой портфель из живого рынка</h2>
-        <p class="hero-copy">Ищи акции, крипту и фонды по Yahoo Finance, смотри карточку инструмента и покупай его без ручного заведения актива админом.</p>
+        <p class="eyebrow">Live-Markt</p>
+        <h2>Baue dein Spielportfolio aus dem Live-Markt</h2>
+        <p class="hero-copy">Suche Aktien, Krypto und Fonds ueber Yahoo Finance, sieh dir die Instrumentenkarte an und kaufe direkt, ohne dass ein Admin den Vermoegenswert manuell anlegen muss.</p>
       </section>
       <section class="grid two reveal">
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Поиск рынка</h3>
-              <p>Найди актив по тикеру или названию и добавь его в watchlist.</p>
+              <h3>Marktsuche</h3>
+              <p>Finde ein Asset per Ticker oder Namen und fuege es der Watchlist hinzu.</p>
             </div>
-            <button id="load-assets" class="ghost-button">Обновить watchlist</button>
+            <button id="load-assets" class="ghost-button">Watchlist aktualisieren</button>
           </div>
           <form id="portfolio-search-form" class="stack-form compact-form">
-            <input id="portfolio-search-query" name="query" type="text" placeholder="Например AAPL, Bitcoin, Vanguard S&P 500" autocomplete="off">
+            <input id="portfolio-search-query" name="query" type="text" placeholder="Zum Beispiel AAPL, Bitcoin, Vanguard S&P 500" autocomplete="off">
           </form>
-          <div id="portfolio-search-results" class="card-list empty-state">Начни вводить тикер или название компании.</div>
+          <div id="portfolio-search-results" class="card-list empty-state">Beginne mit einem Ticker oder Unternehmensnamen.</div>
         </article>
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Карточка актива</h3>
-              <p>Выбранный инструмент и быстрый тикет покупки/продажи.</p>
+              <h3>Asset-Karte</h3>
+              <p>Ausgewaehltes Instrument mit schnellem Kauf- oder Verkaufsticket.</p>
             </div>
           </div>
-          <div id="market-focus" class="market-focus-card empty-state">Выбери актив из поиска или watchlist, чтобы увидеть цену и детали.</div>
+          <div id="market-focus" class="market-focus-card empty-state">Waehle ein Asset aus Suche oder Watchlist, um Preis und Details zu sehen.</div>
           <div id="market-focus-notice" class="inline-notice is-hidden"></div>
           <form id="trade-form" class="stack-form compact-form trade-form portfolio-ticket-form">
             <input name="symbol" type="hidden">
             <select name="side">
-              <option value="buy">buy</option>
-              <option value="sell">sell</option>
+              <option value="buy">Kaufen</option>
+              <option value="sell">Verkaufen</option>
             </select>
-            <input id="trade-quantity" name="quantity" type="number" step="0.00000001" placeholder="Количество" required>
-            <button type="submit">Совершить сделку</button>
+            <input id="trade-quantity" name="quantity" type="number" step="0.00000001" placeholder="Menge" required>
+            <button type="submit">Trade ausfuehren</button>
           </form>
         </article>
       </section>
@@ -75,27 +75,27 @@
           <div class="panel-head row-head">
             <div>
               <h3>Watchlist</h3>
-              <p>Отмеченные активы с актуальными ценами и быстрым возвратом в карточку.</p>
+              <p>Gemerkte Assets mit aktuellen Preisen und schnellem Ruecksprung in die Detailkarte.</p>
             </div>
           </div>
-          <div id="assets-list" class="card-list empty-state">Отметь активы из поиска, чтобы собрать свой market dashboard.</div>
+          <div id="assets-list" class="card-list empty-state">Merke Assets aus der Suche, um dein Markt-Dashboard aufzubauen.</div>
         </article>
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Мой портфель</h3>
-              <p>Приватный состав портфеля, PnL и последние сделки доступны только владельцу.</p>
+              <h3>Mein Portfolio</h3>
+              <p>Private Portfoliostruktur, PnL und letzte Trades sind nur fuer den Eigentümer sichtbar.</p>
             </div>
-            <button id="load-portfolio" class="ghost-button">Обновить</button>
+            <button id="load-portfolio" class="ghost-button">Aktualisieren</button>
           </div>
           <div class="metrics-grid" id="portfolio-metrics"></div>
           <div class="panel-subsection">
-            <h4>Позиции</h4>
-            <div id="portfolio-holdings" class="card-list empty-state">Портфель еще не загружен.</div>
+            <h4>Positionen</h4>
+            <div id="portfolio-holdings" class="card-list empty-state">Portfolio wurde noch nicht geladen.</div>
           </div>
           <div class="panel-subsection">
-            <h4>Последние сделки</h4>
-            <div id="portfolio-trades" class="table-list empty-state">Сделок пока нет.</div>
+            <h4>Letzte Trades</h4>
+            <div id="portfolio-trades" class="table-list empty-state">Noch keine Trades vorhanden.</div>
           </div>
         </article>
       </section>

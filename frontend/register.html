@@ -1,43 +1,42 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prognose Register</title>
+  <title>Prognose Registrierung</title>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body class="auth-body">
   <main class="auth-shell">
     <section class="auth-brand-panel">
-      <p class="eyebrow">Prediction game</p>
-      <h1>Регистрация в Prognose</h1>
-      <p>Создай аккаунт, получи стартовые 10 000 игровых евро и начни строить рейтинг по прогнозам и виртуальному портфелю.</p>
+      <p class="eyebrow">Prognose-Spiel</p>
+      <h1>Registrierung bei Prognose</h1>
+      <p>Erstelle ein Konto, erhalte 10.000 Spiel-Euros als Startguthaben und beginne deinen Aufstieg in Prognose- und Portfolio-Ranglisten.</p>
       <div class="auth-links">
-        <a class="hero-link secondary-link" href="/">На главную</a>
-        <a class="hero-link primary-link" href="/login">Уже есть аккаунт</a>
+        <a class="hero-link secondary-link" href="/">Zur Startseite</a>
+        <a class="hero-link primary-link" href="/login">Ich habe schon ein Konto</a>
       </div>
     </section>
 
     <section class="auth-form-panel">
       <div class="panel-head">
-        <h2>Register</h2>
-        <p>После регистрации для локальной разработки будет показан verification token.</p>
+        <h2>Registrieren</h2>
+        <p>In der lokalen Entwicklung kann die E-Mail nach der Registrierung direkt hier bestaetigt werden.</p>
       </div>
 
       <form id="register-form" class="stack-form auth-form">
-        <input name="email" type="email" placeholder="Email" required>
+        <input name="email" type="email" placeholder="E-Mail" required>
         <input name="handle" type="text" placeholder="Handle" required>
-        <input name="password" type="password" placeholder="Пароль" required>
-        <button type="submit">Создать аккаунт</button>
+        <input name="password" type="password" placeholder="Passwort" required>
+        <button type="submit">Konto erstellen</button>
       </form>
 
       <div class="inline-actions auth-inline-actions">
-        <button id="verify-email" class="ghost-button" type="button">Верифицировать email токеном</button>
+        <button id="verify-email" class="ghost-button" type="button">E-Mail bestaetigen</button>
       </div>
 
-      <div class="auth-status" id="auth-status">Статус: ожидание регистрации.</div>
+      <div class="auth-status" id="auth-status">Status: Registrierung ausstehend.</div>
       <div class="auth-hint is-hidden" id="auth-hint"></div>
-      <pre id="auth-result" class="code-box empty-state">Результат регистрации появится здесь.</pre>
     </section>
   </main>
 

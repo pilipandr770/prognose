@@ -1,106 +1,106 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prognose · События</title>
+  <title>Prognose · Ereignisse</title>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="events">
   <div class="page-shell app-shell">
     <aside class="sidebar">
       <div>
-        <p class="eyebrow">Prediction game</p>
+        <p class="eyebrow">Prognose-Spiel</p>
         <h1>Prognose</h1>
-        <p class="sidebar-copy">Игровая платформа прогнозов, рейтингов и приватных портфелей без денежных ставок.</p>
+        <p class="sidebar-copy">Spielerische Plattform fuer Prognosen, Ranglisten und private Portfolios ohne Geldeinsaetze.</p>
       </div>
       <nav class="sidebar-nav">
-        <a href="/dashboard">Кабинет</a>
-        <a href="/events" class="is-active">Предсказания</a>
-        <a href="/portfolio">Портфель</a>
-        <a href="/leaderboards">Рейтинги</a>
-        <a href="/billing">Подписка</a>
-        <a href="/admin" class="requires-admin is-hidden">Админ</a>
+        <a href="/dashboard">Uebersicht</a>
+        <a href="/events" class="is-active">Prognosen</a>
+        <a href="/portfolio">Portfolio</a>
+        <a href="/leaderboards">Ranglisten</a>
+        <a href="/billing">Abo</a>
+        <a href="/admin" class="requires-admin is-hidden">Verwaltung</a>
       </nav>
       <div class="status-card">
         <span class="status-dot"></span>
         <div>
-          <strong>Events</strong>
-          <p>Отдельный prediction cabinet после выбора режима в dashboard.</p>
+          <strong>Ereignisse</strong>
+          <p>Eigener Prognosebereich nach der Moduswahl im Dashboard.</p>
         </div>
       </div>
     </aside>
     <main class="content">
       <section class="page-hero reveal">
-        <p class="eyebrow">User page</p>
-        <h2>События и прогнозы</h2>
-        <p class="hero-copy">Пользователь предлагает событие, после чего оно проходит модерацию админом. Только одобренные события попадают в публичную ленту и принимают прогнозы.</p>
+        <p class="eyebrow">Nutzerseite</p>
+        <h2>Ereignisse und Prognosen</h2>
+        <p class="hero-copy">Der Nutzer schlaegt ein Ereignis vor, danach geht es in die Moderation. Nur genehmigte Ereignisse erscheinen im oeffentlichen Feed und nehmen Prognosen an.</p>
       </section>
       <section class="grid two reveal">
         <article class="panel">
           <div class="panel-head">
-            <h3>Создать событие</h3>
-            <p>Это user-facing сценарий: предложение отправляется в очередь moderation, а не публикуется автоматически.</p>
+            <h3>Ereignis erstellen</h3>
+            <p>Dies ist ein nutzerseitiger Ablauf: Der Vorschlag geht erst in die Moderation und wird nicht automatisch veroeffentlicht.</p>
           </div>
           <div id="events-feedback" class="inline-notice is-hidden"></div>
           <form id="event-form" class="stack-form">
-            <input name="title" type="text" placeholder="Заголовок события" required>
-            <input name="category" type="text" placeholder="Категория" value="markets" required>
-            <input name="source_of_truth" type="text" placeholder="Источник резолва" required>
-            <textarea name="description" placeholder="Описание"></textarea>
+            <input name="title" type="text" placeholder="Titel des Ereignisses" required>
+            <input name="category" type="text" placeholder="Kategorie" value="markets" required>
+            <input name="source_of_truth" type="text" placeholder="Aufloesungsquelle" required>
+            <textarea name="description" placeholder="Beschreibung"></textarea>
             <input name="closes_at" type="datetime-local" required>
             <input name="resolves_at" type="datetime-local" required>
-            <input name="outcomes" type="text" placeholder="Исходы через запятую: Yes, No" value="Yes, No" required>
-            <button type="submit">Создать событие</button>
+            <input name="outcomes" type="text" placeholder="Ausgaenge mit Komma trennen: Ja, Nein" value="Yes, No" required>
+            <button type="submit">Ereignis erstellen</button>
           </form>
         </article>
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Доступные события</h3>
-              <p>Введи сумму, выбери исход и сначала посмотри live-котировку LMSR. После этого подтверждай покупку позиции.</p>
+              <h3>Verfuegbare Ereignisse</h3>
+              <p>Gib einen Betrag ein, waehle einen Ausgang und sieh dir zuerst die aktuelle LMSR-Quote an. Danach bestaetigst du den Kauf der Position.</p>
             </div>
-            <button id="load-events" class="ghost-button">Обновить</button>
+            <button id="load-events" class="ghost-button">Aktualisieren</button>
           </div>
-          <div id="events-list" class="card-list empty-state">События еще не загружены.</div>
+          <div id="events-list" class="card-list empty-state">Ereignisse wurden noch nicht geladen.</div>
         </article>
       </section>
       <section class="panel reveal">
         <div class="panel-head row-head">
           <div>
-            <h3>Краткий профиль</h3>
-            <p>Чтобы видеть баланс и статус аккаунта, не уходя со страницы событий.</p>
+            <h3>Kurzprofil</h3>
+            <p>Damit Guthaben und Kontostatus sichtbar bleiben, ohne die Ereignisseite zu verlassen.</p>
           </div>
-          <button id="load-me" class="ghost-button">Обновить</button>
+          <button id="load-me" class="ghost-button">Aktualisieren</button>
         </div>
         <div class="metrics-grid" id="account-metrics"></div>
         <div class="panel-subsection">
           <div class="panel-head compact-head">
             <div>
-              <h4>Мои позиции</h4>
-              <p>Последние входы в события без графиков и лишних панелей.</p>
+              <h4>Meine Positionen</h4>
+              <p>Letzte Einstiege in Ereignisse, ohne Charts und ohne ueberfluessige Panels.</p>
             </div>
           </div>
           <div class="positions-toolbar">
-            <input id="positions-search" type="search" placeholder="Поиск по событию или исходу">
+            <input id="positions-search" type="search" placeholder="Nach Ereignis oder Ausgang suchen">
             <select id="positions-status-filter">
-              <option value="all">Все статусы</option>
-              <option value="open">open</option>
-              <option value="won">won</option>
-              <option value="lost">lost</option>
-              <option value="pending">pending</option>
+              <option value="all">Alle Status</option>
+              <option value="open">Offen</option>
+              <option value="won">Gewonnen</option>
+              <option value="lost">Verloren</option>
+              <option value="pending">Ausstehend</option>
             </select>
           </div>
-          <div id="my-positions-list" class="card-list empty-state">Позиции еще не загружены.</div>
+          <div id="my-positions-list" class="card-list empty-state">Positionen wurden noch nicht geladen.</div>
         </div>
         <div class="panel-subsection">
           <div class="panel-head compact-head">
             <div>
-              <h4>Мои созданные события</h4>
-              <p>Здесь видно, ждет ли событие модерацию, уже открыто для других пользователей или завершено.</p>
+              <h4>Meine erstellten Ereignisse</h4>
+              <p>Hier siehst du, ob ein Ereignis noch moderiert wird, bereits offen fuer andere Nutzer ist oder abgeschlossen wurde.</p>
             </div>
           </div>
-          <div id="my-created-events-list" class="card-list empty-state">Созданные события еще не загружены.</div>
+          <div id="my-created-events-list" class="card-list empty-state">Erstellte Ereignisse wurden noch nicht geladen.</div>
         </div>
       </section>
     </main>

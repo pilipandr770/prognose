@@ -1,94 +1,94 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prognose · Личный кабинет</title>
+  <title>Prognose · Uebersicht</title>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="dashboard">
   <div class="page-shell app-shell">
     <aside class="sidebar">
       <div>
-        <p class="eyebrow">Personal hub</p>
+        <p class="eyebrow">Persoenliche Zentrale</p>
         <h1>Prognose</h1>
-        <p class="sidebar-copy">Личный кабинет после входа: отсюда пользователь выбирает prediction room или portfolio room.</p>
+        <p class="sidebar-copy">Uebersicht nach dem Login: Hier waehlt der Nutzer den Prognose- oder Portfoliobereich.</p>
       </div>
       <nav class="sidebar-nav">
-        <a href="/dashboard" class="is-active">Кабинет</a>
-        <a href="/events">Предсказания</a>
-        <a href="/portfolio">Портфель</a>
-        <a href="/leaderboards">Рейтинги</a>
-        <a href="/billing">Подписка</a>
-        <a href="/admin" class="requires-admin is-hidden">Админ</a>
+        <a href="/dashboard" class="is-active">Uebersicht</a>
+        <a href="/events">Prognosen</a>
+        <a href="/portfolio">Portfolio</a>
+        <a href="/leaderboards">Ranglisten</a>
+        <a href="/billing">Abo</a>
+        <a href="/admin" class="requires-admin is-hidden">Verwaltung</a>
       </nav>
       <div class="status-card">
         <span class="status-dot"></span>
         <div>
-          <strong>Dashboard</strong>
-          <p>Social layer открывается из рейтингов, а не как первичная точка входа.</p>
+          <strong>Uebersicht</strong>
+          <p>Die soziale Ebene wird aus den Ranglisten heraus geoeffnet, nicht als erster Einstiegspunkt.</p>
         </div>
       </div>
     </aside>
     <main class="content">
       <section class="page-hero reveal">
-        <p class="eyebrow">After login</p>
-        <h2>Выбери игровой режим</h2>
-        <p class="hero-copy">Prediction room и portfolio room разделены, чтобы пользователь не терялся между разными сценариями. Отсюда начинается работа с продуктом после логина.</p>
+        <p class="eyebrow">Nach dem Login</p>
+        <h2>Waehle deinen Spielmodus</h2>
+        <p class="hero-copy">Prognose- und Portfoliobereich sind getrennt, damit sich der Nutzer nicht zwischen verschiedenen Szenarien verliert. Von hier aus beginnt die eigentliche Nutzung des Produkts.</p>
       </section>
 
       <section class="panel reveal">
         <div class="panel-head row-head">
           <div>
-            <h3>Мой аккаунт</h3>
-            <p>Сводка по балансу, подписке и статусу аккаунта.</p>
+            <h3>Mein Konto</h3>
+            <p>Uebersicht zu Guthaben, Abo und Kontostatus.</p>
           </div>
           <div class="inline-actions">
-            <button id="load-me" class="ghost-button">Обновить</button>
-            <button id="logout-button" class="ghost-button" type="button">Выйти</button>
+            <button id="load-me" class="ghost-button">Aktualisieren</button>
+            <a class="hero-link secondary-link" href="/profile">Mein Profil</a>
+            <button id="logout-button" class="ghost-button" type="button">Abmelden</button>
           </div>
         </div>
         <div class="metrics-grid" id="account-metrics"></div>
-        <pre id="account-json" class="code-box empty-state">Профиль еще не загружен.</pre>
       </section>
 
       <section class="choice-grid reveal">
         <article class="choice-card prediction-card">
-          <p class="eyebrow">Prediction room</p>
-          <h3>События и прогнозы</h3>
-          <p>Предлагай события, проходи через moderation queue и открывай прогнозы на игровые евро только в одобренных рынках.</p>
-          <a class="hero-link primary-link" href="/events">Открыть prediction cabinet</a>
+          <p class="eyebrow">Prognosebereich</p>
+          <h3>Ereignisse und Prognosen</h3>
+          <p>Schlage Ereignisse vor, gehe durch die Moderation und eroeffne Prognosen mit Spiel-Euros nur in genehmigten Maerkten.</p>
+          <a class="hero-link primary-link" href="/events">Prognosebereich oeffnen</a>
         </article>
         <article class="choice-card portfolio-card">
-          <p class="eyebrow">Portfolio room</p>
-          <h3>Виртуальный портфель</h3>
-          <p>Управляй игровыми сделками, смотри приватный состав позиций и соревнуйся в отдельном портфельном рейтинге.</p>
-          <a class="hero-link primary-link" href="/portfolio">Открыть portfolio cabinet</a>
+          <p class="eyebrow">Portfoliobereich</p>
+          <h3>Virtuelles Portfolio</h3>
+          <p>Verwalte Spiel-Trades, pruefe deine private Positionsstruktur und miss dich in einer eigenen Portfolio-Rangliste.</p>
+          <a class="hero-link primary-link" href="/portfolio">Portfoliobereich oeffnen</a>
         </article>
       </section>
 
       <section class="grid two reveal">
         <article class="panel">
           <div class="panel-head">
-            <h3>Отдельные рейтинги</h3>
-            <p>Prediction leaderboard и portfolio leaderboard живут отдельно.</p>
+            <h3>Getrennte Ranglisten</h3>
+            <p>Prognose- und Portfolio-Rangliste werden sauber getrennt gefuehrt.</p>
           </div>
           <div class="stack-copy">
-            <p>Сначала пользователь сравнивает себя с другими по результату.</p>
-            <p>Потом уже переходит в social layer для подписок и общения.</p>
+            <p>Zuerst vergleicht der Nutzer sein Ergebnis mit anderen.</p>
+            <p>Danach geht es in die soziale Ebene fuer Abos und Austausch.</p>
           </div>
-          <a class="hero-link secondary-link" href="/leaderboards">Открыть рейтинги</a>
+          <a class="hero-link secondary-link" href="/leaderboards">Ranglisten oeffnen</a>
         </article>
         <article class="panel">
           <div class="panel-head">
-            <h3>Подписка</h3>
-            <p>Тариф влияет на инструменты и социальные лимиты, но не на игровую честность.</p>
+            <h3>Abo</h3>
+            <p>Der Tarif beeinflusst Werkzeuge und soziale Limits, aber nicht die spielerische Fairness.</p>
           </div>
           <div class="stack-copy">
-            <p>Free для входа в продукт.</p>
-            <p>Pro и Elite для расширенной аналитики и social features.</p>
+            <p>Free fuer den Einstieg.</p>
+            <p>Pro und Elite fuer erweiterte Analysen und Social-Features.</p>
           </div>
-          <a class="hero-link secondary-link" href="/billing">Открыть подписку</a>
+          <a class="hero-link secondary-link" href="/billing">Abo oeffnen</a>
         </article>
       </section>
     </main>

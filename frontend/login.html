@@ -1,42 +1,41 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prognose Login</title>
+  <title>Prognose Anmeldung</title>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body class="auth-body">
   <main class="auth-shell">
     <section class="auth-brand-panel">
-      <p class="eyebrow">Prediction game</p>
-      <h1>Вход в Prognose</h1>
-      <p>Войди в аккаунт, чтобы управлять прогнозами, портфелем, подписками и своей позицией в рейтингах.</p>
+      <p class="eyebrow">Prognose-Spiel</p>
+      <h1>Anmeldung bei Prognose</h1>
+      <p>Melde dich an, um Prognosen, Portfolio, Abos und deine Position in den Ranglisten zu verwalten.</p>
       <div class="auth-links">
-        <a class="hero-link secondary-link" href="/">На главную</a>
-        <a class="hero-link primary-link" href="/register">Создать аккаунт</a>
+        <a class="hero-link secondary-link" href="/">Zur Startseite</a>
+        <a class="hero-link primary-link" href="/register">Konto erstellen</a>
       </div>
     </section>
 
     <section class="auth-form-panel">
       <div class="panel-head">
-        <h2>Login</h2>
-        <p>Используй email и пароль. После успешного входа токены сохранятся локально в браузере.</p>
+        <h2>Anmelden</h2>
+        <p>Verwende E-Mail und Passwort. Nach erfolgreicher Anmeldung werden die Tokens lokal im Browser gespeichert.</p>
       </div>
 
       <form id="login-form" class="stack-form auth-form">
-        <input name="email" type="email" placeholder="Email" required>
-        <input name="password" type="password" placeholder="Пароль" required>
-        <button type="submit">Войти</button>
+        <input name="email" type="email" placeholder="E-Mail" required>
+        <input name="password" type="password" placeholder="Passwort" required>
+        <button type="submit">Anmelden</button>
       </form>
 
       <div class="inline-actions auth-inline-actions">
-        <button id="refresh-access" class="ghost-button" type="button">Обновить access token</button>
+        <button id="refresh-access" class="ghost-button" type="button">Zugangstoken erneuern</button>
       </div>
 
-      <div class="auth-status" id="auth-status">Статус: ожидание входа.</div>
+      <div class="auth-status" id="auth-status">Status: Anmeldung ausstehend.</div>
       <div class="auth-hint is-hidden" id="auth-hint"></div>
-      <pre id="auth-result" class="code-box empty-state">Результат входа появится здесь.</pre>
     </section>
   </main>
 

@@ -39,12 +39,32 @@ function storeEmail(email) {
 }
 
 function renderAuthResult(label, payload) {
+  if (!authResult) {
+    return;
+  }
   authResult.textContent = `[${label}]\n${JSON.stringify(payload, null, 2)}`;
   authResult.classList.remove("empty-state");
 }
 
 function setStatus(text) {
-  authStatus.textContent = `Статус: ${text}`;
+  if (!authStatus) {
+    return;
+  }
+  authStatus.textContent = `Status: ${text}`;
+}
+
+function translateAuthError(message) {
+  const translations = {
+    "Email is already registered.": "Diese E-Mail ist bereits registriert.",
+    "Handle is already taken.": "Dieser Handle ist bereits vergeben.",
+    "Invalid credentials.": "Ungueltige Anmeldedaten.",
+    "HTTP 401": "Nicht autorisiert.",
+    "HTTP 403": "Zugriff verweigert.",
+    "HTTP 404": "Ressource nicht gefunden.",
+    "HTTP 500": "Interner Serverfehler.",
+  };
+
+  return translations[message] || message;
 }
 
 async function authApi(path, options = {}) {
@@ -95,21 +115,22 @@ if (registerForm) {
       });
       authState.lastVerificationToken = result.dev_notes?.email_verification_token || "";
       localStorage.setItem("prognose.emailToken", authState.lastVerificationToken);
-      setStatus("аккаунт создан");
-      showHint("Аккаунт создан. Можно подтвердить email или сразу перейти ко входу.", "/login", "Перейти ко входу");
+      setStatus("Konto erstellt");
+      showHint("Konto erstellt. Du kannst jetzt die E-Mail bestaetigen oder direkt zum Login wechseln.", "/login", "Zum Login");
       renderAuthResult("register", result);
     } catch (error) {
-      setStatus("ошибка регистрации");
+      const localizedError = translateAuthError(error.message);
+      setStatus("Registrierung fehlgeschlagen");
       if (error.message === "Email is already registered.") {
         const email = getStoredEmail();
         const loginHref = email ? `/login?email=${encodeURIComponent(email)}` : "/login";
-        showHint("Такой email уже есть в системе. Войди под ним или используй другой email для новой регистрации.", loginHref, "Открыть вход");
+        showHint("Diese E-Mail existiert bereits. Melde dich damit an oder nutze eine andere E-Mail fuer ein neues Konto.", loginHref, "Login oeffnen");
       } else if (error.message === "Handle is already taken.") {
-        showHint("Этот handle уже занят. Выбери другой nickname для нового аккаунта.");
+        showHint("Dieser Handle ist bereits belegt. Bitte waehle einen anderen Namen fuer dein neues Konto.");
       } else {
         showHint("");
       }
-      renderAuthResult("register-error", { error: error.message });
+      renderAuthResult("register-error", { error: localizedError });
     }
   });
 }
@@ -133,18 +154,19 @@ if (loginForm) {
         skipAuth: true,
       });
       persistTokens(result.access_token, result.refresh_token);
-      setStatus("вход выполнен");
+      setStatus("Anmeldung erfolgreich");
       showHint("");
       renderAuthResult("login", result);
       window.location.href = "/dashboard";
     } catch (error) {
-      setStatus("ошибка входа");
+      const localizedError = translateAuthError(error.message);
+      setStatus("Anmeldung fehlgeschlagen");
       if (error.message === "Invalid credentials.") {
-        showHint("Проверь email и пароль. Если аккаунт уже создан, используй те же данные, что при регистрации.");
+        showHint("Pruefe E-Mail und Passwort. Wenn das Konto bereits existiert, nutze dieselben Daten wie bei der Registrierung.");
       } else {
         showHint("");
       }
-      renderAuthResult("login-error", { error: error.message });
+      renderAuthResult("login-error", { error: localizedError });
     }
   });
 }
@@ -152,8 +174,8 @@ if (loginForm) {
 if (verifyButton) {
   verifyButton.addEventListener("click", async () => {
     if (!authState.lastVerificationToken) {
-      setStatus("нет verification token");
-      renderAuthResult("verify-error", { error: "Сначала зарегистрируй аккаунт." });
+      setStatus("Kein Bestaetigungstoken vorhanden");
+      renderAuthResult("verify-error", { error: "Bitte registriere zuerst ein Konto." });
       return;
     }
 
@@ -163,12 +185,12 @@ if (verifyButton) {
         body: JSON.stringify({ token: authState.lastVerificationToken }),
         skipAuth: true,
       });
-      setStatus("email подтвержден");
-      showHint("Email подтвержден. Теперь можно войти в кабинет.", "/login", "Открыть вход");
+      setStatus("E-Mail bestaetigt");
+      showHint("Die E-Mail wurde bestaetigt. Du kannst dich jetzt anmelden.", "/login", "Login oeffnen");
       renderAuthResult("verify-email", result);
     } catch (error) {
-      setStatus("ошибка подтверждения");
-      renderAuthResult("verify-error", { error: error.message });
+      setStatus("Bestaetigung fehlgeschlagen");
+      renderAuthResult("verify-error", { error: translateAuthError(error.message) });
     }
   });
 }
@@ -176,8 +198,8 @@ if (verifyButton) {
 if (refreshButton) {
   refreshButton.addEventListener("click", async () => {
     if (!authState.refreshToken) {
-      setStatus("нет refresh token");
-      renderAuthResult("refresh-error", { error: "Сначала войди в аккаунт." });
+      setStatus("Kein Refresh-Token vorhanden");
+      renderAuthResult("refresh-error", { error: "Bitte melde dich zuerst an." });
       return;
     }
 
@@ -191,12 +213,12 @@ if (refreshButton) {
         throw new Error(result.error || `HTTP ${response.status}`);
       }
       persistTokens(result.access_token, null);
-      setStatus("access token обновлен");
+      setStatus("Zugangstoken erneuert");
       showHint("");
       renderAuthResult("refresh", result);
     } catch (error) {
-      setStatus("ошибка обновления токена");
-      renderAuthResult("refresh-error", { error: error.message });
+      setStatus("Token-Aktualisierung fehlgeschlagen");
+      renderAuthResult("refresh-error", { error: translateAuthError(error.message) });
     }
   });
 }

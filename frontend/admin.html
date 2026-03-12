@@ -1,133 +1,125 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prognose · Админ</title>
+  <title>Prognose · Verwaltung</title>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="admin">
   <div class="page-shell app-shell">
     <aside class="sidebar">
       <div>
-        <p class="eyebrow">Project admin</p>
-        <h1>Prognose Admin</h1>
-        <p class="sidebar-copy">Отдельное рабочее пространство для управления каталогом активов, резолвом событий и обзором пользователей.</p>
+        <p class="eyebrow">Projekt-Admin</p>
+        <h1>Prognose Verwaltung</h1>
+        <p class="sidebar-copy">Separater Arbeitsbereich fuer Asset-Katalog, Ereignisaufloesung und Nutzerverwaltung.</p>
       </div>
       <nav class="sidebar-nav">
-        <a href="/dashboard">Пользовательский UI</a>
-        <a href="/admin" class="is-active">Дашборд</a>
+        <a href="/dashboard">Nutzeroberflaeche</a>
+        <a href="/admin" class="is-active">Verwaltung</a>
       </nav>
       <div class="status-card">
         <span class="status-dot"></span>
         <div>
-          <strong>Admin only</strong>
-          <p>Эта зона должна использоваться только admin-аккаунтом.</p>
+          <strong>Nur Admin</strong>
+          <p>Dieser Bereich darf nur mit einem Admin-Konto genutzt werden.</p>
         </div>
       </div>
     </aside>
     <main class="content">
       <section class="page-hero reveal">
-        <p class="eyebrow">Admin page</p>
-        <h2>Управление платформой</h2>
-        <p class="hero-copy">Все admin-функции вынесены отдельно, чтобы не путать обычного пользователя большим числом системных кнопок.</p>
+        <p class="eyebrow">Admin-Seite</p>
+        <h2>Plattform verwalten</h2>
+        <p class="hero-copy">Alle Verwaltungsfunktionen sind separat ausgelagert, damit normale Nutzer nicht mit zu vielen Systemaktionen ueberladen werden.</p>
       </section>
       <section class="panel reveal">
         <div class="panel-head row-head">
           <div>
-            <h3>Admin overview</h3>
-            <p>Ключевые системные счетчики по платформе.</p>
+            <h3>Verwaltungsuebersicht</h3>
+            <p>Wichtige Systemkennzahlen der Plattform.</p>
           </div>
-          <button id="load-admin-dashboard" class="ghost-button">Обновить</button>
+          <button id="load-admin-dashboard" class="ghost-button">Aktualisieren</button>
         </div>
         <div class="metrics-grid" id="admin-metrics"></div>
       </section>
       <section class="panel reveal">
         <div class="panel-head">
-          <h3>AI generation</h3>
-          <p>Запусти генерацию нескольких событий из внешних источников. Можно либо получить suggestions, либо сразу опубликовать и дать AI bot стартовые позиции.</p>
+          <h3>KI-Generierung</h3>
+          <p>Starte die Generierung mehrerer Ereignisse aus externen Quellen. Du kannst nur Vorschlaege erzeugen oder direkt veroeffentlichen und dem KI-Bot Startpositionen geben.</p>
         </div>
         <form id="admin-ai-form" class="stack-form compact-form">
           <input name="count" type="number" min="1" max="5" value="3" required>
-          <textarea name="topics" maxlength="500" placeholder="Темы для генерации: CPI, ставки ФРС, BTC ETF, earnings, elections"></textarea>
-          <textarea name="source_urls" maxlength="2500" placeholder="Ссылки из браузера, по одной на строку. Например Reuters, official calendars, company IR."></textarea>
-          <textarea name="source_notes" maxlength="6000" placeholder="Если сайт режет автоматическое чтение, вставь сюда короткие заметки или абзацы прямо из браузера."></textarea>
-          <label class="checkbox-row"><input name="publish_generated" type="checkbox" value="true"> Создать события и отправить их в очередь модерации</label>
-          <label class="checkbox-row"><input name="create_seed_predictions" type="checkbox" value="true"> Ставить стартовые AI-позиции через bot-пользователя</label>
-          <button type="submit">Запустить AI generation</button>
+          <textarea name="topics" maxlength="500" placeholder="Themen fuer die Generierung: CPI, Fed-Zinsen, BTC ETF, Earnings, Wahlen"></textarea>
+          <textarea name="source_urls" maxlength="2500" placeholder="Links aus dem Browser, eine URL pro Zeile. Zum Beispiel Reuters, offizielle Kalender oder Investor-Relations-Seiten."></textarea>
+          <textarea name="source_notes" maxlength="6000" placeholder="Falls eine Seite automatisches Lesen blockiert, fuege hier kurze Notizen oder Absaetze direkt aus dem Browser ein."></textarea>
+          <label class="checkbox-row"><input name="publish_generated" type="checkbox" value="true"> Ereignisse erstellen und in die Moderation senden</label>
+          <label class="checkbox-row"><input name="create_seed_predictions" type="checkbox" value="true"> Startpositionen ueber den Bot-Nutzer setzen</label>
+          <button type="submit">KI-Generierung starten</button>
         </form>
         <div class="hint-block">
-          <strong>Как работать:</strong>
-          <p>1. Открой в браузере Reuters, investing/economic calendar, official stats calendars или investor relations нужных компаний.</p>
-          <p>2. Скопируй 2-5 ссылок с актуальными анонсами или календарем событий.</p>
-          <p>2a. Если сайт не отдает страницу автоматически, просто вставь короткие заметки в source notes.</p>
-          <p>2b. Не вставляй всю страницу целиком. Нужны 1-5 коротких абзацев, а не сырой HTML.</p>
-          <p>3. Укажи тему, например CPI, ставки, earnings, elections.</p>
-          <p>4. Сначала запускай без публикации, оцени suggestions, потом включай publish.</p>
+          <strong>So gehst du vor:</strong>
+          <p>1. Oeffne im Browser Reuters, Wirtschafts- oder Statistik-Kalender oder Investor-Relations-Seiten passender Unternehmen.</p>
+          <p>2. Kopiere 2 bis 5 Links mit aktuellen Ankuendigungen oder einem Ereigniskalender.</p>
+          <p>2a. Wenn eine Seite nicht automatisch gelesen werden kann, fuege kurze Notizen in die Quellenhinweise ein.</p>
+          <p>2b. Fuege nicht die komplette Seite ein. Es genuegen 1 bis 5 kurze Absaetze statt rohem HTML.</p>
+          <p>3. Gib ein Thema an, zum Beispiel CPI, Zinsen, Earnings oder Wahlen.</p>
+          <p>4. Starte zuerst ohne Veroeffentlichung, pruefe die Vorschlaege und aktiviere danach die Publikation.</p>
         </div>
         <div id="admin-ai-feedback" class="inline-notice is-hidden"></div>
-        <div id="admin-ai-results" class="card-list empty-state">AI generation пока не запускалась.</div>
+        <div id="admin-ai-results" class="card-list empty-state">Die KI-Generierung wurde noch nicht gestartet.</div>
       </section>
       <section class="grid two reveal">
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Moderation queue</h3>
-              <p>Проверка пользовательских событий на адекватность и рамки платформы. После approve событие становится доступно другим пользователям.</p>
+              <h3>Moderationswarteschlange</h3>
+              <p>Pruefung nutzergenerierter Ereignisse auf Plausibilitaet und Plattformregeln. Nach der Freigabe wird das Ereignis fuer andere Nutzer sichtbar.</p>
             </div>
-            <button id="load-admin-pending-events" class="ghost-button">Обновить</button>
+            <button id="load-admin-pending-events" class="ghost-button">Aktualisieren</button>
           </div>
           <div id="admin-feedback" class="inline-notice is-hidden"></div>
-          <div id="admin-pending-events-list" class="card-list empty-state">Очередь модерации пока не загружена.</div>
+          <div id="admin-pending-events-list" class="card-list empty-state">Die Moderationswarteschlange wurde noch nicht geladen.</div>
         </article>
         <article class="panel">
           <div class="panel-head">
-            <h3>Manual asset override</h3>
-            <p>Ручное создание и апдейт цены оставлены как резервный режим. Основной пользовательский flow теперь идет через live search Yahoo Finance.</p>
+            <h3>Manuelles Asset-Override</h3>
+            <p>Manuelle Anlage und Preisupdate bleiben als Fallback erhalten. Der Hauptfluss fuer Nutzer laeuft jetzt ueber die Live-Suche von Yahoo Finance.</p>
           </div>
           <form id="admin-asset-form" class="stack-form compact-form">
             <input name="symbol" type="text" placeholder="AAPL" required>
             <input name="name" type="text" placeholder="Apple Inc." required>
             <input name="asset_type" type="text" placeholder="stock" required>
             <input name="current_price" type="number" step="0.01" placeholder="200.00" required>
-            <button type="submit">Создать актив</button>
+            <button type="submit">Asset erstellen</button>
           </form>
           <form id="admin-price-form" class="stack-form compact-form">
-            <input name="asset_id" type="number" placeholder="ID актива" required>
-            <input name="current_price" type="number" step="0.01" placeholder="Новая цена" required>
-            <button type="submit">Обновить цену</button>
+            <input name="asset_id" type="number" placeholder="Asset-ID" required>
+            <input name="current_price" type="number" step="0.01" placeholder="Neuer Preis" required>
+            <button type="submit">Preis aktualisieren</button>
           </form>
         </article>
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Users</h3>
-              <p>Флаги suspicious activity, роли и ручное пополнение игрового баланса.</p>
+              <h3>Nutzer</h3>
+              <p>Flags fuer verdaechtige Aktivitaet, Rollen und manuelles Auffuellen des Spielguthabens.</p>
             </div>
-            <button id="load-admin-users" class="ghost-button">Обновить</button>
+            <button id="load-admin-users" class="ghost-button">Aktualisieren</button>
           </div>
           <div id="admin-users-feedback" class="inline-notice is-hidden"></div>
-          <div id="admin-users-list" class="table-list empty-state">Пользователи еще не загружены.</div>
+          <div id="admin-users-list" class="table-list empty-state">Nutzer wurden noch nicht geladen.</div>
         </article>
       </section>
       <section class="grid two reveal">
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Resolve events</h3>
-              <p>Админ может резолвить события централизованно.</p>
+              <h3>Ereignisse aufloesen</h3>
+              <p>Der Admin kann Ereignisse zentral aufloesen.</p>
             </div>
-            <button id="load-admin-events" class="ghost-button">Обновить</button>
+            <button id="load-admin-events" class="ghost-button">Aktualisieren</button>
           </div>
-          <div id="admin-events-list" class="card-list empty-state">События еще не загружены.</div>
-        </article>
-        <article class="panel">
-          <div class="panel-head">
-            <h3>Admin log</h3>
-            <p>Ответы admin API для ручного контроля.</p>
-          </div>
-          <button id="clear-log" class="ghost-button">Очистить</button>
-          <pre id="activity-log" class="code-box empty-state">Лог пока пуст.</pre>
+          <div id="admin-events-list" class="card-list empty-state">Ereignisse wurden noch nicht geladen.</div>
         </article>
       </section>
     </main>

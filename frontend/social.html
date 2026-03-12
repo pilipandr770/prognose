@@ -1,67 +1,113 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prognose · Соцсеть</title>
+  <title>Prognose · Community</title>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="social">
   <div class="page-shell app-shell">
     <aside class="sidebar">
       <div>
-        <p class="eyebrow">Prediction game</p>
+        <p class="eyebrow">Prognose-Spiel</p>
         <h1>Prognose</h1>
-        <p class="sidebar-copy">Игровая платформа прогнозов, рейтингов и приватных портфелей без денежных ставок.</p>
+        <p class="sidebar-copy">Spielerische Plattform fuer Prognosen, Ranglisten und private Portfolios ohne Geldeinsaetze.</p>
       </div>
       <nav class="sidebar-nav">
-        <a href="/dashboard">Кабинет</a>
-        <a href="/events">Предсказания</a>
-        <a href="/portfolio">Портфель</a>
-        <a href="/leaderboards">Рейтинги</a>
-        <a href="/social" class="is-active">Соцсеть</a>
-        <a href="/billing">Подписка</a>
-        <a href="/admin" class="requires-admin is-hidden">Админ</a>
+        <a href="/dashboard">Uebersicht</a>
+        <a href="/events">Prognosen</a>
+        <a href="/portfolio">Portfolio</a>
+        <a href="/leaderboards">Ranglisten</a>
+        <a href="/social" class="is-active">Community</a>
+        <a href="/billing">Abo</a>
+        <a href="/admin" class="requires-admin is-hidden">Verwaltung</a>
       </nav>
       <div class="status-card">
         <span class="status-dot"></span>
         <div>
-          <strong>Social</strong>
-          <p>Подписки, публичные профили и activity feed.</p>
+          <strong>Community</strong>
+          <p>Abos, oeffentliche Profile und Aktivitaetsfeed.</p>
         </div>
       </div>
     </aside>
     <main class="content">
       <section class="page-hero reveal">
-        <p class="eyebrow">User page</p>
-        <h2>Социальный слой</h2>
-        <p class="hero-copy">Публичные профили, подписки и общение открываются после рейтингов, когда пользователь уже понимает, за кем ему интересно следить.</p>
+        <p class="eyebrow">Nutzerseite</p>
+        <h2>Soziale Ebene</h2>
+        <p class="hero-copy">Oeffentliche Profile, Abos und Austausch oeffnen sich nach den Ranglisten, wenn der Nutzer bereits weiss, wem er folgen moechte.</p>
       </section>
       <section class="grid two reveal">
         <article class="panel">
-          <div class="panel-head">
-            <h3>Подписки и профили</h3>
-            <p>Подпишись на пользователя или открой его публичную страницу.</p>
+          <div class="panel-head row-head">
+            <div>
+              <h3>Community-Postfach</h3>
+              <p id="social-inbox-meta">Postfach wird geladen...</p>
+            </div>
+            <div class="inline-actions social-inbox-actions">
+              <button id="load-social-inbox" type="button" class="ghost-button">Aktualisieren</button>
+              <button id="mark-all-social-read" type="button" class="ghost-button">Alles als gelesen</button>
+            </div>
           </div>
+          <div id="social-inbox-list" class="card-list empty-state">Postfach wurde noch nicht geladen.</div>
+        </article>
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Abos und Profile</h3>
+            <p>Folge starken Teilnehmern, oeffne oeffentliche Profile und verwalte deinen sozialen Graphen schnell.</p>
+          </div>
+          <p id="social-feedback" class="inline-notice is-hidden"></p>
           <form id="follow-form" class="stack-form compact-form">
-            <input name="handle" type="text" placeholder="Кого подписать" required>
-            <button type="submit">Подписаться</button>
+            <input name="handle" type="text" placeholder="Handle zum Abonnieren" required>
+            <button type="submit">Abonnieren</button>
           </form>
           <form id="profile-form" class="stack-form compact-form">
-            <input name="handle" type="text" placeholder="Handle для публичного профиля" required>
-            <button type="submit">Показать профиль</button>
+            <input name="handle" type="text" placeholder="Handle fuer oeffentliches Profil" required>
+            <button type="submit">Profil anzeigen</button>
           </form>
-          <pre id="public-profile-json" class="code-box empty-state">Публичный профиль еще не загружен.</pre>
+          <div id="public-profile-card" class="card-list empty-state">Waehle einen Nutzer, um sein oeffentliches Profil und eine Kurzstatistik zu sehen.</div>
         </article>
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Activity Feed</h3>
-              <p>Публичные прогнозы тех, на кого ты подписан.</p>
+              <h3>Aktivitaetsfeed</h3>
+              <p>Hier sind jetzt nicht nur Prognosen sichtbar, sondern auch neue Maerkte von Personen aus deinem Kreis.</p>
             </div>
-            <button id="load-feed" class="ghost-button">Обновить</button>
+            <button id="load-feed" class="ghost-button">Aktualisieren</button>
           </div>
-          <div id="feed-list" class="card-list empty-state">Лента еще не загружена.</div>
+          <div id="feed-list" class="card-list empty-state">Feed wurde noch nicht geladen.</div>
+        </article>
+      </section>
+      <section class="grid two reveal">
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Wen du dir ansehen solltest</h3>
+            <p>Empfehlungen werden aus Prognose- und Portfolio-Ranglisten sowie aus aktiven Markterstellern zusammengestellt.</p>
+          </div>
+          <div id="social-discovery-recommended" class="card-list empty-state">Empfehlungen wurden noch nicht geladen.</div>
+        </article>
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Deine Abos</h3>
+            <p>Schneller Zugriff auf die Nutzer, denen du bereits folgst.</p>
+          </div>
+          <div id="social-discovery-following" class="card-list empty-state">Abos wurden noch nicht geladen.</div>
+        </article>
+      </section>
+      <section class="grid two reveal">
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Starke Prognostiker</h3>
+            <p>Spitzenreiter der Prognose-Rangliste, denen man regelmaessig folgen sollte.</p>
+          </div>
+          <div id="social-top-predictions" class="card-list empty-state">Prognose-Rangliste wurde noch nicht geladen.</div>
+        </article>
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Starke Portfolio-Spieler</h3>
+            <p>Nutzer mit der besten oeffentlichen Portfoliodynamik.</p>
+          </div>
+          <div id="social-top-portfolios" class="card-list empty-state">Portfolio-Rangliste wurde noch nicht geladen.</div>
         </article>
       </section>
     </main>

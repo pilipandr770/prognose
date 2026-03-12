@@ -1,6 +1,7 @@
 :root {
   --bg: #f4efe6;
   --paper: rgba(255, 250, 241, 0.88);
+  --paper-strong: rgba(255, 252, 246, 0.96);
   --ink: #1f2721;
   --muted: #5f6b62;
   --line: rgba(31, 39, 33, 0.12);
@@ -8,10 +9,13 @@
   --accent-soft: #efc5ae;
   --teal: #216a6d;
   --teal-soft: rgba(33, 106, 109, 0.12);
+  --gold-soft: rgba(203, 156, 82, 0.18);
   --shadow: 0 18px 50px rgba(40, 38, 31, 0.12);
+  --shadow-soft: 0 10px 24px rgba(40, 38, 31, 0.08);
   --radius-xl: 28px;
   --radius-lg: 20px;
   --radius-md: 14px;
+  --content-max: 1480px;
 }
 
 * {
@@ -24,12 +28,31 @@ html {
 
 body {
   margin: 0;
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  font-family: "Aptos", "Segoe UI Variable Text", "Segoe UI", sans-serif;
+  line-height: 1.45;
   color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(191, 91, 49, 0.18), transparent 22%),
+    radial-gradient(circle at top left, rgba(191, 91, 49, 0.2), transparent 22%),
+    radial-gradient(circle at 85% 18%, rgba(203, 156, 82, 0.16), transparent 18%),
     radial-gradient(circle at bottom right, rgba(33, 106, 109, 0.18), transparent 24%),
     linear-gradient(180deg, #f6f0e9 0%, #efe6da 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255,255,255,0.14), rgba(255,255,255,0.14)),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 31px,
+      rgba(31, 39, 33, 0.018) 31px,
+      rgba(31, 39, 33, 0.018) 32px
+    );
+  opacity: 0.45;
 }
 
 h1,
@@ -37,7 +60,7 @@ h2,
 h3,
 h4,
 strong {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   letter-spacing: -0.02em;
 }
 
@@ -52,7 +75,7 @@ button {
 
 .page-shell {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 320px minmax(0, 1fr);
   min-height: 100vh;
 }
 
@@ -64,14 +87,17 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 22px;
   border-right: 1px solid var(--line);
-  background: rgba(248, 242, 232, 0.78);
-  backdrop-filter: blur(18px);
+  background:
+    linear-gradient(180deg, rgba(248, 242, 232, 0.92), rgba(241, 233, 221, 0.82));
+  backdrop-filter: blur(18px) saturate(1.05);
 }
 
 .sidebar h1 {
   margin: 0;
-  font-size: 2.4rem;
+  font-size: clamp(2.5rem, 3vw, 3.3rem);
+  line-height: 0.94;
 }
 
 .eyebrow {
@@ -101,12 +127,15 @@ button {
   color: var(--ink);
   padding: 12px 14px;
   border-radius: 999px;
-  background: transparent;
-  transition: background 180ms ease, transform 180ms ease;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid transparent;
+  transition: background 180ms ease, transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .sidebar-nav a:hover {
-  background: rgba(33, 106, 109, 0.08);
+  background: rgba(255, 255, 255, 0.58);
+  border-color: rgba(33, 106, 109, 0.12);
+  box-shadow: var(--shadow-soft);
   transform: translateX(4px);
 }
 
@@ -119,10 +148,12 @@ button {
 .status-card,
 .panel,
 .hero-panel {
-  background: var(--paper);
+  background:
+    linear-gradient(180deg, var(--paper-strong), rgba(255, 248, 239, 0.88));
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
 }
 
 .status-card {
@@ -141,14 +172,23 @@ button {
 }
 
 .content {
-  padding: 36px;
+  padding: 40px clamp(20px, 3vw, 42px);
   display: grid;
-  gap: 24px;
+  gap: 28px;
+  width: 100%;
+  max-width: var(--content-max);
 }
 
 .page-hero {
   display: grid;
   gap: 10px;
+  padding: 24px 28px;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(31, 39, 33, 0.08);
+  background:
+    radial-gradient(circle at top right, rgba(203, 156, 82, 0.14), transparent 32%),
+    linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,249,241,0.56));
+  box-shadow: var(--shadow-soft);
 }
 
 .page-hero h2 {
@@ -217,6 +257,12 @@ button {
   border-radius: var(--radius-xl);
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.choice-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 44px rgba(40, 38, 31, 0.14);
 }
 
 .choice-card h3 {
@@ -251,6 +297,7 @@ button {
   border-radius: 999px;
   font-weight: 700;
   border: 1px solid transparent;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 
 .primary-link {
@@ -265,6 +312,22 @@ button {
   border-color: rgba(33, 106, 109, 0.12);
 }
 
+.hero-link:hover,
+button:hover {
+  transform: translateY(-2px);
+}
+
+.hero-link:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.sidebar-nav a:focus-visible,
+.profile-link:focus-visible {
+  outline: 2px solid rgba(33, 106, 109, 0.45);
+  outline-offset: 2px;
+}
+
 .grid.two {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -272,7 +335,7 @@ button {
 }
 
 .panel {
-  padding: 24px;
+  padding: 26px;
   min-width: 0;
 }
 
@@ -335,6 +398,26 @@ button {
   color: var(--ink);
 }
 
+input,
+textarea,
+select {
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+  border-color: rgba(33, 106, 109, 0.16);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: rgba(33, 106, 109, 0.28);
+  box-shadow: 0 0 0 5px rgba(33, 106, 109, 0.08);
+  background: rgba(255, 255, 255, 0.94);
+}
+
 textarea {
   min-height: 96px;
   resize: vertical;
@@ -350,7 +433,7 @@ button {
 }
 
 button:hover {
-  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(191, 91, 49, 0.16);
 }
 
 .ghost-button {
@@ -445,7 +528,7 @@ button:hover {
 
 .metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 12px;
   margin-bottom: 16px;
 }
@@ -453,8 +536,11 @@ button:hover {
 .metric-card {
   padding: 16px;
   border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,245,238,0.94));
+  background:
+    radial-gradient(circle at top right, rgba(203, 156, 82, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,245,238,0.94));
   border: 1px solid rgba(191, 91, 49, 0.12);
+  min-height: 112px;
 }
 
 .metric-card span {
@@ -484,6 +570,7 @@ button:hover {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.78);
   min-width: 0;
+  box-shadow: 0 8px 22px rgba(40, 38, 31, 0.05);
 }
 
 .data-card h4,
@@ -491,9 +578,86 @@ button:hover {
   margin: 0 0 8px;
 }
 
+.leaderboard-row-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.leaderboard-row-link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(33, 106, 109, 0.22);
+  box-shadow: 0 12px 24px rgba(33, 106, 109, 0.08);
+}
+
+.leaderboard-row-cta {
+  margin-top: 10px;
+  color: var(--teal);
+  font-weight: 700;
+}
+
+.leaderboard-row-bio {
+  color: var(--muted);
+}
+
+.leaderboard-row-actions {
+  margin-top: 12px;
+}
+
 .data-card p,
 .table-row p {
   margin: 4px 0;
+}
+
+.social-feed-card,
+.social-user-card,
+.social-profile-card,
+.social-inbox-card {
+  background:
+    radial-gradient(circle at top right, rgba(33, 106, 109, 0.08), transparent 36%),
+    linear-gradient(180deg, rgba(255,255,255,0.9), rgba(251,245,238,0.9));
+}
+
+.social-inbox-card.is-unread {
+  border-color: rgba(33, 106, 109, 0.22);
+}
+
+.social-inbox-card.is-read {
+  opacity: 0.82;
+}
+
+.social-inbox-actions {
+  margin-top: 0;
+}
+
+.social-feed-title {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.social-summary-tags {
+  margin-bottom: 10px;
+}
+
+.social-profile-metrics {
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
+
+.profile-link {
+  color: var(--teal);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.profile-link:hover {
+  text-decoration: underline;
+}
+
+.social-profile-card .profile-link {
+  word-break: break-word;
 }
 
 .position-card-head {
@@ -742,6 +906,7 @@ button:hover {
   border-radius: 22px;
   background: linear-gradient(180deg, rgba(33,106,109,0.06), rgba(255,255,255,0.88));
   border: 1px solid rgba(33, 106, 109, 0.12);
+  min-height: 220px;
 }
 
 .plan-card.featured {
@@ -871,6 +1036,21 @@ button:hover {
     height: auto;
     border-right: none;
     border-bottom: 1px solid var(--line);
+    padding-bottom: 22px;
+  }
+
+  .sidebar-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 10px;
+    margin: 20px 0;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+  }
+
+  .sidebar-nav a {
+    white-space: nowrap;
   }
 }
 
@@ -878,6 +1058,16 @@ button:hover {
   .content,
   .sidebar {
     padding: 20px;
+  }
+
+  .page-hero,
+  .panel,
+  .hero-panel,
+  .choice-card,
+  .status-card,
+  .auth-brand-panel,
+  .auth-form-panel {
+    border-radius: 22px;
   }
 
   .row-head,
@@ -894,11 +1084,64 @@ button:hover {
     flex-direction: column;
   }
 
+  .hero-link,
+  .inline-actions .hero-link,
+  .inline-actions button,
+  .social-inbox-actions button,
+  .leaderboard-row-actions .hero-link,
+  .leaderboard-row-actions button {
+    width: 100%;
+  }
+
   .hero h2 {
     max-width: none;
   }
 
+  .page-hero h2,
+  .hero h2,
+  .choice-card h3,
+  .market-focus-head h3 {
+    font-size: clamp(1.7rem, 7vw, 2.4rem);
+  }
+
   .market-focus-metrics {
     grid-template-columns: 1fr;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .positions-toolbar {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .content,
+  .sidebar,
+  .auth-body {
+    padding: 16px;
+  }
+
+  .panel,
+  .page-hero,
+  .choice-card,
+  .hero-panel,
+  .auth-brand-panel,
+  .auth-form-panel {
+    padding: 20px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .position-card-head {
+    align-items: flex-start;
+  }
+
+  .sidebar h1 {
+    font-size: 2.2rem;
   }
 }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prognose · Profil</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body data-page="profile">
+  <div class="page-shell app-shell">
+    <aside class="sidebar">
+      <div>
+        <p class="eyebrow">Identitaet</p>
+        <h1>Prognose</h1>
+        <p class="sidebar-copy">Oeffentliches Profil eines Teilnehmers: wer er ist, wie er in der sozialen Ebene erscheint und welche Informationen er freigibt.</p>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/dashboard">Uebersicht</a>
+        <a href="/profile" class="is-active">Profil</a>
+        <a href="/events">Prognosen</a>
+        <a href="/portfolio">Portfolio</a>
+        <a href="/leaderboards">Ranglisten</a>
+        <a href="/social">Community</a>
+        <a href="/billing">Abo</a>
+        <a href="/admin" class="requires-admin is-hidden">Verwaltung</a>
+      </nav>
+      <div class="status-card">
+        <span class="status-dot"></span>
+        <div>
+          <strong>Profil</strong>
+          <p>Bearbeite deine oeffentlichen Angaben und oeffne Profile anderer Teilnehmer mit einem Klick.</p>
+        </div>
+      </div>
+    </aside>
+    <main class="content">
+      <section class="page-hero reveal">
+        <p class="eyebrow">Oeffentliche Identitaet</p>
+        <h2 id="profile-page-heading">Profil</h2>
+        <p id="profile-page-copy" class="hero-copy">Profil wird geladen...</p>
+      </section>
+      <section class="grid two reveal">
+        <article class="panel">
+          <div class="panel-head row-head">
+            <div>
+              <h3>Oeffentliches Profil</h3>
+              <p>So sehen andere Nutzer dein Profil in Empfehlungen, Feeds und ueber die Ranglisten.</p>
+            </div>
+            <a class="hero-link secondary-link" href="/social">Zur Community</a>
+          </div>
+          <div id="public-profile-card" class="card-list empty-state">Profil wurde noch nicht geladen.</div>
+        </article>
+        <article id="profile-editor-panel" class="panel is-hidden">
+          <div class="panel-head">
+            <h3>Angaben ueber dich bearbeiten</h3>
+            <p>Diese Daten werden in deinem Profil veroeffentlicht und erscheinen bei Klicks auf deinen Handle.</p>
+          </div>
+          <p id="profile-editor-feedback" class="inline-notice is-hidden"></p>
+          <form id="profile-editor-form" class="stack-form">
+            <label>
+              Handle
+              <input name="handle_readonly" type="text" readonly>
+            </label>
+            <label>
+              Anzeigename
+              <input name="display_name" type="text" maxlength="80" placeholder="Zum Beispiel Andrei Petrov">
+            </label>
+            <label>
+              Kurzprofil
+              <textarea name="bio" maxlength="500" placeholder="Erzaehle kurz, was du machst und worauf du gern Prognosen abgibst."></textarea>
+            </label>
+            <label>
+              Ort
+              <input name="location" type="text" maxlength="80" placeholder="Zum Beispiel Berlin, Deutschland">
+            </label>
+            <label>
+              Website
+              <input name="website_url" type="url" maxlength="255" placeholder="https://your-site.example">
+            </label>
+            <button type="submit">Profil speichern</button>
+          </form>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="/assets/app.js"></script>
+</body>
+</html>

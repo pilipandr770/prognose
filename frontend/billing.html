@@ -1,62 +1,61 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prognose · Подписка</title>
+  <title>Prognose · Abo</title>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="billing">
   <div class="page-shell app-shell">
     <aside class="sidebar">
       <div>
-        <p class="eyebrow">Prediction game</p>
+        <p class="eyebrow">Prognose-Spiel</p>
         <h1>Prognose</h1>
-        <p class="sidebar-copy">Игровая платформа прогнозов, рейтингов и приватных портфелей без денежных ставок.</p>
+        <p class="sidebar-copy">Spielerische Plattform fuer Prognosen, Ranglisten und private Portfolios ohne Geldeinsaetze.</p>
       </div>
       <nav class="sidebar-nav">
-        <a href="/dashboard">Кабинет</a>
-        <a href="/events">Предсказания</a>
-        <a href="/portfolio">Портфель</a>
-        <a href="/leaderboards">Рейтинги</a>
-        <a href="/billing" class="is-active">Подписка</a>
-        <a href="/admin" class="requires-admin is-hidden">Админ</a>
+        <a href="/dashboard">Uebersicht</a>
+        <a href="/events">Prognosen</a>
+        <a href="/portfolio">Portfolio</a>
+        <a href="/leaderboards">Ranglisten</a>
+        <a href="/billing" class="is-active">Abo</a>
+        <a href="/admin" class="requires-admin is-hidden">Verwaltung</a>
       </nav>
       <div class="status-card">
         <span class="status-dot"></span>
         <div>
-          <strong>Billing</strong>
-          <p>Тарифы и текущая подписка пользователя.</p>
+          <strong>Abo</strong>
+          <p>Tarife und aktuelles Nutzerabo.</p>
         </div>
       </div>
     </aside>
     <main class="content">
       <section class="page-hero reveal">
-        <p class="eyebrow">User page</p>
-        <h2>Тарифы и подписка</h2>
-        <p class="hero-copy">Stripe webhook flow закончим после деплоя. Пока здесь пользователь видит тарифы и может тестировать mock checkout.</p>
+        <p class="eyebrow">Nutzerseite</p>
+        <h2>Tarife und Abo</h2>
+        <p class="hero-copy">Den Stripe-Webhook-Fluss schliessen wir nach dem Deployment ab. Bis dahin sieht der Nutzer hier die Tarife und kann den Test-Kauf ausprobieren.</p>
       </section>
       <section class="grid two reveal">
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Моя подписка</h3>
-              <p>Текущий план и доступные entitlements.</p>
+              <h3>Mein Abo</h3>
+              <p>Aktueller Plan und verfuegbare Berechtigungen.</p>
             </div>
-            <button id="load-billing-me" class="ghost-button">Обновить</button>
+            <button id="load-billing-me" class="ghost-button">Aktualisieren</button>
           </div>
           <div class="metrics-grid" id="billing-metrics"></div>
-          <pre id="billing-json" class="code-box empty-state">Подписка еще не загружена.</pre>
         </article>
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Тарифные планы</h3>
-              <p>Mock checkout остается доступным для ручного теста.</p>
+              <h3>Tarifplaene</h3>
+              <p>Der Test-Kauf bleibt fuer manuelle Pruefungen verfuegbar.</p>
             </div>
-            <button id="load-plans" class="ghost-button">Обновить тарифы</button>
+            <button id="load-plans" class="ghost-button">Tarife aktualisieren</button>
           </div>
-          <div id="plans-grid" class="plans-grid empty-state">Тарифы еще не загружены.</div>
+          <div id="plans-grid" class="plans-grid empty-state">Tarife wurden noch nicht geladen.</div>
         </article>
       </section>
     </main>

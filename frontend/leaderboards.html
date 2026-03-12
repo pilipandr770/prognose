@@ -1,70 +1,70 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prognose · Рейтинги</title>
+  <title>Prognose · Ranglisten</title>
   <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body data-page="leaderboards">
   <div class="page-shell app-shell">
     <aside class="sidebar">
       <div>
-        <p class="eyebrow">Prediction game</p>
+        <p class="eyebrow">Prognose-Spiel</p>
         <h1>Prognose</h1>
-        <p class="sidebar-copy">Игровая платформа прогнозов, рейтингов и приватных портфелей без денежных ставок.</p>
+        <p class="sidebar-copy">Spielerische Plattform fuer Prognosen, Ranglisten und private Portfolios ohne Geldeinsaetze.</p>
       </div>
       <nav class="sidebar-nav">
-        <a href="/dashboard">Кабинет</a>
-        <a href="/events">Предсказания</a>
-        <a href="/portfolio">Портфель</a>
-        <a href="/leaderboards" class="is-active">Рейтинги</a>
-        <a href="/billing">Подписка</a>
-        <a href="/admin" class="requires-admin is-hidden">Админ</a>
+        <a href="/dashboard">Uebersicht</a>
+        <a href="/events">Prognosen</a>
+        <a href="/portfolio">Portfolio</a>
+        <a href="/leaderboards" class="is-active">Ranglisten</a>
+        <a href="/billing">Abo</a>
+        <a href="/admin" class="requires-admin is-hidden">Verwaltung</a>
       </nav>
       <div class="status-card">
         <span class="status-dot"></span>
         <div>
-          <strong>Leaderboards</strong>
-          <p>Два независимых рейтинга платформы.</p>
+          <strong>Ranglisten</strong>
+          <p>Zwei voneinander getrennte Ranglisten der Plattform.</p>
         </div>
       </div>
     </aside>
     <main class="content">
       <section class="page-hero reveal">
-        <p class="eyebrow">User page</p>
-        <h2>Рейтинги прогнозов и портфелей</h2>
-        <p class="hero-copy">На этой странице только соревновательный слой. Переход в social layer и общение начинаются уже после просмотра рейтингов.</p>
+        <p class="eyebrow">Nutzerseite</p>
+        <h2>Prognose- und Portfolio-Ranglisten</h2>
+        <p class="hero-copy">Diese Seite zeigt nur den Wettbewerbs-Layer. Klicke auf einen Ranglistenplatz, um direkt das Profil des Teilnehmers zu oeffnen und ihn zu abonnieren.</p>
       </section>
       <section class="grid two reveal">
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Prediction Leaderboard</h3>
-              <p>Accuracy, ROI и sample bonus.</p>
+              <h3>Prognose-Rangliste</h3>
+              <p>Trefferquote, ROI und Bonus fuer Stichprobengroesse.</p>
             </div>
-            <button data-board="predictions" class="refresh-board ghost-button">Обновить</button>
+            <button data-board="predictions" class="refresh-board ghost-button">Aktualisieren</button>
           </div>
-          <div id="prediction-board" class="table-list empty-state">Рейтинг еще не загружен.</div>
+          <div id="prediction-board" class="table-list empty-state">Rangliste wurde noch nicht geladen.</div>
         </article>
         <article class="panel">
           <div class="panel-head row-head">
             <div>
-              <h3>Portfolio Leaderboard</h3>
-              <p>Return и diversification bonus.</p>
+              <h3>Portfolio-Rangliste</h3>
+              <p>Rendite und Diversifikationsbonus.</p>
             </div>
-            <button data-board="portfolios" class="refresh-board ghost-button">Обновить</button>
+            <button data-board="portfolios" class="refresh-board ghost-button">Aktualisieren</button>
           </div>
-          <div id="portfolio-board" class="table-list empty-state">Рейтинг еще не загружен.</div>
+          <div id="portfolio-board" class="table-list empty-state">Rangliste wurde noch nicht geladen.</div>
         </article>
       </section>
       <section class="panel reveal">
         <div class="panel-head row-head">
           <div>
-            <h3>Дальше в сообщество</h3>
-            <p>После сравнения результатов можно добавить пользователей, открыть их профиль и перейти к общению.</p>
+            <h3>Weiter in die Community</h3>
+            <p>Nach dem Vergleich der Ergebnisse kannst du Nutzer abonnieren, ihre Profile oeffnen und in den Austausch gehen.</p>
           </div>
-          <a class="hero-link secondary-link" href="/social">Открыть social layer</a>
+          <a class="hero-link secondary-link" href="/social">Community oeffnen</a>
         </div>
       </section>
     </main>
