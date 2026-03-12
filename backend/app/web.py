@@ -7,6 +7,7 @@ FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
 ASSETS_DIR = FRONTEND_DIR / "assets"
 PAGE_MAP = {
     "dashboard": "dashboard.html",
+    "profile": "profile.html",
     "login": "login.html",
     "register": "register.html",
     "events": "events.html",

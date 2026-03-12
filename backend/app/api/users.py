@@ -1,11 +1,13 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
+from app.extensions import db
 from app.models.event import Event
 from app.models.prediction import PredictionPosition
 from app.models.user import User
 from app.services.billing_service import get_billing_summary
 from app.services.entitlement_service import get_user_entitlements
+from app.services.profile_service import ProfileError, serialize_profile_fields, update_user_profile
 from app.services.social_notification_service import get_unread_social_notifications_count
 
 
@@ -34,9 +36,11 @@ def me():
             "id": user.id,
             "email": user.email,
             "handle": user.handle,
+            "display_name": user.display_name,
             "is_admin": user.is_admin,
             "email_verified": user.email_verified,
             "verification_status": user.verification_status,
+            "profile": serialize_profile_fields(user),
             "wallet": {
                 "currency_code": user.wallet.currency_code,
                 "current_balance": str(user.wallet.current_balance),
@@ -83,3 +87,31 @@ def me():
             ],
         }
     )
+
+
+@users_bp.patch("/me/profile")
+@jwt_required()
+def patch_my_profile():
+    user = User.query.filter_by(id=int(get_jwt_identity())).first()
+    if user is None:
+        return jsonify({"error": "User not found."}), 404
+
+    payload = request.get_json(silent=True) or {}
+
+    try:
+        update_user_profile(
+            user,
+            display_name=payload.get("display_name"),
+            bio=payload.get("bio"),
+            location=payload.get("location"),
+            website_url=payload.get("website_url"),
+        )
+        db.session.commit()
+    except ProfileError as exc:
+        db.session.rollback()
+        return jsonify({"error": str(exc)}), 400
+
+    return jsonify({
+        "profile": serialize_profile_fields(user),
+        "handle": user.handle,
+    })

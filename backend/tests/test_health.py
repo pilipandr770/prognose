@@ -61,8 +61,71 @@ def test_register_login_and_fetch_profile(client):
     assert profile_response.status_code == 200
     profile_payload = profile_response.get_json()
     assert profile_payload["handle"] == "forecastfox"
+    assert profile_payload["profile"]["display_name"] is None
     assert profile_payload["wallet"]["current_balance"] == "10000.00"
     assert profile_payload["social"]["unread_notifications_count"] == 0
+
+
+def test_user_can_update_profile_info_and_public_profile_reflects_it(client):
+    client.post(
+        "/api/auth/register",
+        json={"email": "profileedit@example.com", "handle": "profileedit", "password": "strong-pass-123"},
+    )
+    login_response = client.post(
+        "/api/auth/login",
+        json={"email": "profileedit@example.com", "password": "strong-pass-123"},
+    )
+    headers = {"Authorization": f"Bearer {login_response.get_json()['access_token']}"}
+
+    patch_response = client.patch(
+        "/api/me/profile",
+        headers=headers,
+        json={
+            "display_name": "Andrei Forecast",
+            "bio": "Macro and crypto player.",
+            "location": "Warsaw",
+            "website_url": "https://example.com/profileedit",
+        },
+    )
+    assert patch_response.status_code == 200
+    patch_payload = patch_response.get_json()["profile"]
+    assert patch_payload["display_name"] == "Andrei Forecast"
+    assert patch_payload["bio"] == "Macro and crypto player."
+    assert patch_payload["location"] == "Warsaw"
+    assert patch_payload["website_url"] == "https://example.com/profileedit"
+
+    me_response = client.get("/api/me", headers=headers)
+    assert me_response.status_code == 200
+    me_payload = me_response.get_json()
+    assert me_payload["profile"]["display_name"] == "Andrei Forecast"
+
+    public_response = client.get("/api/users/profileedit")
+    assert public_response.status_code == 200
+    public_payload = public_response.get_json()["profile"]
+    assert public_payload["display_name"] == "Andrei Forecast"
+    assert public_payload["bio"] == "Macro and crypto player."
+    assert public_payload["location"] == "Warsaw"
+    assert public_payload["website_url"] == "https://example.com/profileedit"
+
+
+def test_profile_update_validates_website_url(client):
+    client.post(
+        "/api/auth/register",
+        json={"email": "badsite@example.com", "handle": "badsite", "password": "strong-pass-123"},
+    )
+    login_response = client.post(
+        "/api/auth/login",
+        json={"email": "badsite@example.com", "password": "strong-pass-123"},
+    )
+    headers = {"Authorization": f"Bearer {login_response.get_json()['access_token']}"}
+
+    patch_response = client.patch(
+        "/api/me/profile",
+        headers=headers,
+        json={"website_url": "not-a-valid-url"},
+    )
+    assert patch_response.status_code == 400
+    assert patch_response.get_json()["error"] == "website_url must be a valid http or https URL."
 
 
 def test_create_event_and_place_prediction(client):
@@ -943,6 +1006,8 @@ def test_public_profile_shows_counts_and_hides_private_portfolio_data(client):
     assert profile_response.status_code == 200
     profile_payload = profile_response.get_json()["profile"]
     assert profile_payload["handle"] == "profileuser"
+    assert profile_payload["display_name"] is None
+    assert profile_payload["bio"] is None
     assert profile_payload["followers_count"] == 0
     assert profile_payload["following_count"] == 0
     assert profile_payload["approved_events_count"] == 0

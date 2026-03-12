@@ -7,6 +7,7 @@ from app.models.prediction import PredictionPosition
 from app.models.social import FollowRelation
 from app.models.user import User
 from app.services.entitlement_service import get_user_entitlements
+from app.services.profile_service import serialize_profile_fields
 from app.services.social_notification_service import notify_new_follower
 from app.services.portfolio_service import get_public_portfolio_summary_by_handle
 from app.services.scoring_service import get_leaderboard, refresh_leaderboard
@@ -40,6 +41,7 @@ def _user_card(user: User, *, current_user_id: int | None = None, reason: str | 
     return {
         "id": user.id,
         "handle": user.handle,
+        "display_name": user.display_name,
         "verification_status": user.verification_status,
         "followers_count": follower_count,
         "following_count": following_count,
@@ -149,6 +151,7 @@ def get_public_profile(handle: str) -> dict:
                 "score": str(portfolio_rank.score) if portfolio_rank else None,
             },
         },
+        **serialize_profile_fields(user),
         "portfolio_summary": public_portfolio,
     }
 
