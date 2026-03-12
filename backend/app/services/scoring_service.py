@@ -3,6 +3,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from app.extensions import db
 from app.models.leaderboard import LeaderboardSnapshot
 from app.models.prediction import PredictionPosition
+from app.models.social import FollowRelation
 from app.models.user import User
 from app.services.portfolio_service import get_private_portfolio
 
@@ -165,10 +166,14 @@ def get_leaderboard(leaderboard_type: str) -> list[dict]:
     items = []
     for snapshot in snapshots:
         user = User.query.filter_by(id=snapshot.user_id).first()
+        follower_count = FollowRelation.query.filter_by(followee_id=snapshot.user_id).count()
         items.append(
             {
                 "user_id": snapshot.user_id,
                 "handle": user.handle if user else None,
+                "display_name": user.display_name if user else None,
+                "bio": user.bio if user else None,
+                "followers_count": follower_count,
                 "rank": snapshot.rank,
                 "score": str(_quantize_score(Decimal(snapshot.score))),
                 "metrics": snapshot.metrics,
